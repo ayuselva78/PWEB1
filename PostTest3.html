@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contoh Local Scope</title>
+</head>
+<body>
+
+  <h1>Perbedaan antara Local Scope dan Global Scope</h1>
+
+  <script>
+    // Fungsi dengan variabel dalam local scope
+    function contohLocalScope() {
+      let localVar = "Ini variabel lokal";
+      console.log("Di dalam fungsi:", localVar);  // Dapat mengakses localVar di dalam fungsi
+    }
+
+    // Memanggil fungsi untuk melihat variabel dalam local scope
+    contohLocalScope();  // Output: Di dalam fungsi: Ini variabel lokal
+
+    // Mencoba mengakses variabel localVar di luar fungsi (global scope)
+    console.log("Di luar fungsi:", localVar);  // Error: localVar is not defined
+  </script>
+
+</body>
+</html>

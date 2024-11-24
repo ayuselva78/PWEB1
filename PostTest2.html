@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Menghitung Kuadrat</title>
+</head>
+<body>
+
+  <h1>Program Menghitung Kuadrat dari Angka</h1>
+  
+  <p>Tekan tombol untuk menghitung kuadrat dari angka 77.</p>
+  
+  <button onclick="hitungKuadratDari77()">Hitung Kuadrat 77</button>
+  <p id="result"></p>
+
+  <script>
+    function hitungKuadrat(angka) {
+      return angka * angka;  
+    }
+
+    function hitungKuadratDari77() {
+      let hasil = hitungKuadrat(77); ]
+      document.getElementById("result").innerText = "Kuadrat dari 77 adalah: " + hasil;
+    }
+  </script>
+
+</body>
+</html>

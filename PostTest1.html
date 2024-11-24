@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perbedaan Var, Let, Const</title>
+</head>
+<body>
+
+  <h1>Perbedaan Var, Let, dan Const</h1>
+
+  <button onclick="contohScope()">Jalankan Contoh Scope</button>
+  <p id="output-scope"></p>
+
+  <button onclick="testHoisting()">Jalankan Contoh Hoisting</button>
+  <p id="output-hoisting"></p>
+
+  <script>
+    // Contoh scope var, let, const
+    function contohScope() {
+      let output = '';
+      if (true) {
+        var a = 10;  // var memiliki function scope
+        let b = 20;  // let memiliki block scope
+        const c = 30; // const memiliki block scope
+      }
+      output += `a (var): ${a} <br>`;
+      try { output += `b (let): ${b} <br>`; } catch { output += `Error b (let)<br>`; }
+      try { output += `c (const): ${c} <br>`; } catch { output += `Error c (const)<br>`; }
+      document.getElementById("output-scope").innerHTML = output;
+    }
+
+    // Contoh hoisting var, let, const
+    function testHoisting() {
+      let output = '';
+      try { output += `x (var): ${x} <br>`; } catch { output += `Error x (var)<br>`; }
+      var x = 5;
+      try { output += `y (let): ${y} <br>`; } catch { output += `Error y (let)<br>`; }
+      let y = 10;
+      try { output += `z (const): ${z} <br>`; } catch { output += `Error z (const)<br>`; }
+      const z = 15;
+      document.getElementById("output-hoisting").innerHTML = output;
+    }
+  </script>
+
+</body>
+</html>
