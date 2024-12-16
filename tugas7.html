@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manajemen Lowongan Kerja</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="text-center">Manajemen Lowongan Kerja</h1>
+    
+    <!-- Form Tambah Lowongan -->
+    <h2>Tambah Lowongan</h2>
+    <form id="formLowongan">
+      <div class="mb-3">
+        <label for="judul" class="form-label">Judul Lowongan</label>
+        <input type="text" class="form-control" id="judul" required>
+      </div>
+      <div class="mb-3">
+        <label for="deskripsi" class="form-label">Deskripsi</label>
+        <textarea class="form-control" id="deskripsi" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="lokasi" class="form-label">Lokasi</label>
+        <input type="text" class="form-control" id="lokasi" required>
+      </div>
+      <div class="mb-3">
+        <label for="perusahaan" class="form-label">Perusahaan</label>
+        <input type="text" class="form-control" id="perusahaan" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Tambahkan Lowongan</button>
+    </form>
+
+    <hr>
+
+    <!-- Form Perbarui Lowongan -->
+    <h2>Perbarui Lowongan</h2>
+    <form id="formPerbarui">
+      <div class="mb-3">
+        <label for="idPerbarui" class="form-label">ID Lowongan</label>
+        <input type="number" class="form-control" id="idPerbarui" required>
+      </div>
+      <div class="mb-3">
+        <label for="judulPerbarui" class="form-label">Judul Lowongan</label>
+        <input type="text" class="form-control" id="judulPerbarui" required>
+      </div>
+      <div class="mb-3">
+        <label for="deskripsiPerbarui" class="form-label">Deskripsi</label>
+        <textarea class="form-control" id="deskripsiPerbarui" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="lokasiPerbarui" class="form-label">Lokasi</label>
+        <input type="text" class="form-control" id="lokasiPerbarui" required>
+      </div>
+      <div class="mb-3">
+        <label for="perusahaanPerbarui" class="form-label">Perusahaan</label>
+        <input type="text" class="form-control" id="perusahaanPerbarui" required>
+      </div>
+      <button type="button" class="btn btn-warning" onclick="perbaruiLowongan()">Perbarui Lowongan</button>
+    </form>
+
+    <hr>
+
+    <!-- Hapus Lowongan -->
+    <h2>Hapus Lowongan</h2>
+    <form id="formHapus">
+      <div class="mb-3">
+        <label for="idHapus" class="form-label">ID Lowongan</label>
+        <input type="number" class="form-control" id="idHapus" required>
+      </div>
+      <button type="button" class="btn btn-danger" onclick="hapusLowongan()">Hapus Lowongan</button>
+    </form>
+
+    <hr>
+
+    <h2>Daftar Lowongan</h2>
+    <button class="btn btn-secondary mb-3" id="ambilLowongan">Lihat Semua Lowongan</button>
+    <table class="table table-bordered" id="tabelLowongan">
+      <thead>
+        <tr>
+          <th>Judul</th>
+          <th>Deskripsi</th>
+          <th>Lokasi</th>
+          <th>Perusahaan</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const apiUrl = 'https://script.google.com/macros/s/AKfycbzd2XUDUzE4h9V71b6EFkv2RI-z0sMKpb23DUFEsvimgsHQnWgO8TVQ-eCbEtTqybAcJg/exec'; // Ganti dengan URL API Anda
+
+    // Tambahkan Lowongan
+    document.getElementById('formLowongan').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const judul = document.getElementById('judul').value;
+      const deskripsi = document.getElementById('deskripsi').value;
+      const lokasi = document.getElementById('lokasi').value;
+      const perusahaan = document.getElementById('perusahaan').value;
+
+      await fetch(`${apiUrl}?action=tambah&judul=${judul}&deskripsi=${deskripsi}&lokasi=${lokasi}&perusahaan=${perusahaan}`);
+      alert('Lowongan berhasil ditambahkan!');
+      document.getElementById('formLowongan').reset(); // Reset form setelah submit
+      ambilLowongan(); // Perbarui daftar lowongan
+    });
+
+    // Ambil Lowongan (Tampilkan semua lowongan)
+    document.getElementById('ambilLowongan').addEventListener('click', async function () {
+      ambilLowongan();
+    });
+
+    // Fungsi untuk mengambil lowongan dan menampilkan pada tabel
+    async function ambilLowongan() {
+      const response = await fetch(`${apiUrl}?action=cari&kataKunci=`);
+      const lowongan = await response.json();
+
+      const tbody = document.querySelector('#tabelLowongan tbody');
+      tbody.innerHTML = '';  // Clear tabel sebelum menambah data baru
+      lowongan.forEach(l => {
+        const row = `<tr>
+          <td>${l.Judul}</td>
+          <td>${l.Deskripsi}</td>
+          <td>${l.Lokasi}</td>
+          <td>${l.Perusahaan}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Perbarui Lowongan
+    async function perbaruiLowongan() {
+      const id = document.getElementById('idPerbarui').value;
+      const judul = document.getElementById('judulPerbarui').value;
+      const deskripsi = document.getElementById('deskripsiPerbarui').value;
+      const lokasi = document.getElementById('lokasiPerbarui').value;
+      const perusahaan = document.getElementById('perusahaanPerbarui').value;
+
+      await fetch(`${apiUrl}?action=ubah&id=${id}&judul=${judul}&deskripsi=${deskripsi}&lokasi=${lokasi}&perusahaan=${perusahaan}`);
+      alert('Lowongan berhasil diperbarui!');
+      document.getElementById('formPerbarui').reset(); // Reset form setelah submit
+      ambilLowongan(); // Perbarui daftar lowongan
+    }
+
+    // Hapus Lowongan
+    async function hapusLowongan() {
+      const id = document.getElementById('idHapus').value;
+      await fetch(`${apiUrl}?action=hapus&id=${id}`);
+      alert('Lowongan berhasil dihapus!');
+      document.getElementById('formHapus').reset(); // Reset form setelah submit
+      ambilLowongan(); // Perbarui daftar lowongan
+    }
+
+    // Menampilkan semua lowongan saat halaman pertama kali dimuat
+    window.onload = async function() {
+      ambilLowongan();
+    };
+  </script>
+</body>
+</html>
